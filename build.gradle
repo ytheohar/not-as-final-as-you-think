@@ -1,0 +1,38 @@
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.7
+
+group = 'org.ytheohar'
+version = '0.1'
+def artifactName = 'not-as-final-as-you-think'
+
+jar {
+	baseName = artifactName
+}
+
+repositories {
+	mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+	compile 'org.codehaus.groovy:groovy:2.4.3'
+	testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+}
+
+test {
+	testLogging {
+		events "passed", "skipped", "failed", "standardOut", "standardError"
+	}
+}
+
+publishing {
+    publications {    
+        maven(MavenPublication) {
+			artifactId artifactName
+            from components.java
+        }
+    }
+}
